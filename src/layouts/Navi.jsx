@@ -4,7 +4,7 @@ import { Button, Container, Dropdown, Menu } from 'semantic-ui-react'
 export default function Navi() {
     return (
         <div>
-            <Menu inverted>
+            <Menu inverted fixed="top">
                 <Container>
                     <Menu.Item
                         name='home'

@@ -1,35 +1,36 @@
-import React from 'react'
-import { Icon, Label, Menu, Table } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
+import { Icon, Menu, Table } from 'semantic-ui-react'
+import CustomerService from '../services/customerService'
 export default function CustomerList() {
+
+    const [customers, setCustomers] = useState([])
+    useEffect(()=>{
+        let customerService = new CustomerService()
+        customerService.getCustomers().then(result=>setCustomers(result.data.data))
+    })
     return (
         <div>
             <Table celled>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell>Header</Table.HeaderCell>
-                        <Table.HeaderCell>Header</Table.HeaderCell>
-                        <Table.HeaderCell>Header</Table.HeaderCell>
+                        <Table.HeaderCell>Name</Table.HeaderCell>
+                        <Table.HeaderCell>E-mail</Table.HeaderCell>
+                        <Table.HeaderCell>Phone</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
-                    <Table.Row>
-                        <Table.Cell>
-                            <Label ribbon>First</Label>
-                        </Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell>Cell</Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell>Cell</Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                        <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
+                    {
+                        customers.map(customer => (
+                            <Table.Row key={customer.passportNumber}>
+                                <Table.Cell>{customer.customerName}</Table.Cell>
+                                <Table.Cell>{customer.email}</Table.Cell>
+                                <Table.Cell>{customer.customerPhone}</Table.Cell>
+                            </Table.Row>
+                        ))
+                    }
+
+
                 </Table.Body>
 
                 <Table.Footer>
