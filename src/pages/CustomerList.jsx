@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Icon, Menu, Table } from 'semantic-ui-react'
 import CustomerService from '../services/customerService'
 export default function CustomerList() {
@@ -7,7 +8,7 @@ export default function CustomerList() {
     useEffect(()=>{
         let customerService = new CustomerService()
         customerService.getCustomers().then(result=>setCustomers(result.data.data))
-    })
+    }, [])
     return (
         <div>
             <Table celled>
@@ -23,7 +24,7 @@ export default function CustomerList() {
                     {
                         customers.map(customer => (
                             <Table.Row key={customer.passportNumber}>
-                                <Table.Cell>{customer.customerName}</Table.Cell>
+                                <Table.Cell><Link to={`/customers/${customer.passportNumber}`}>{customer.customerName}</Link> </Table.Cell>
                                 <Table.Cell>{customer.email}</Table.Cell>
                                 <Table.Cell>{customer.customerPhone}</Table.Cell>
                             </Table.Row>
