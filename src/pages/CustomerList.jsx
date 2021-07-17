@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Icon, Menu, Table } from 'semantic-ui-react'
+import { Button, Icon, Menu, Table } from 'semantic-ui-react'
 import CustomerService from '../services/customerService'
+import { addToCustomerCart } from '../store/actions/customerCartActions'
+import { toast } from 'react-toastify'
+
 export default function CustomerList() {
 
+    const dispatch = useDispatch()
     const [customers, setCustomers] = useState([])
-    useEffect(()=>{
+    useEffect(() => {
         let customerService = new CustomerService()
-        customerService.getCustomers().then(result=>setCustomers(result.data.data))
+        customerService.getCustomers().then(result => setCustomers(result.data.data))
     }, [])
+
+    
+
+    const handleAddtoCustomerCart = (customer) => {
+        dispatch(addToCustomerCart(customer))
+        toast.success(`${customer.customerName} selected`)
+    }
     return (
         <div>
             <Table celled>
@@ -17,6 +29,7 @@ export default function CustomerList() {
                         <Table.HeaderCell>Name</Table.HeaderCell>
                         <Table.HeaderCell>E-mail</Table.HeaderCell>
                         <Table.HeaderCell>Phone</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -27,6 +40,7 @@ export default function CustomerList() {
                                 <Table.Cell><Link to={`/customers/${customer.passportNumber}`}>{customer.customerName}</Link> </Table.Cell>
                                 <Table.Cell>{customer.email}</Table.Cell>
                                 <Table.Cell>{customer.customerPhone}</Table.Cell>
+                                <Table.Cell><Button onClick={() => handleAddtoCustomerCart(customer)}>Select</Button></Table.Cell>
                             </Table.Row>
                         ))
                     }
