@@ -2,6 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { Grid } from 'semantic-ui-react'
+import CustomerAdd from '../pages/CustomerAdd'
 import CustomerDetail from '../pages/CustomerDetail'
 import CustomerList from '../pages/CustomerList'
 import Home from '../pages/Home'
@@ -20,6 +21,7 @@ export default function Dashboard() {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/customers" component={CustomerList} />
                         <Route path="/customers/:id" component={CustomerDetail} />
+                        <Route path="/customer/add" component={CustomerAdd} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
