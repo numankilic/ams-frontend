@@ -6,6 +6,7 @@ export default function Categories() {
         <div>
             <Menu pointing vertical>
                 <Menu.Item><Link to={`/customers`}>Customers</Link></Menu.Item>
+                <Menu.Item><Link to={`/customer/add`}>Add Customer</Link></Menu.Item>
             </Menu>
         </div>
     )
