@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Table } from 'semantic-ui-react'
+import { Link, useParams } from 'react-router-dom'
+import {Button ,Table } from 'semantic-ui-react'
 import CustomerService from '../services/customerService'
 export default function CustomerDetail() {
     let { id } = useParams()
@@ -33,6 +33,7 @@ export default function CustomerDetail() {
                         <Table.Cell>{customer.address}</Table.Cell>
                         <Table.Cell>{customer.country}</Table.Cell>
                         <Table.Cell>{customer.passportNumber}</Table.Cell>
+                        <Table.Cell><Link to={`/customer/update/${customer.passportNumber}`}>Update</Link> </Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>

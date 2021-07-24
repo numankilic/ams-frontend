@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Icon, Menu, Table } from 'semantic-ui-react'
+import { Button, Table } from 'semantic-ui-react'
 import CustomerService from '../services/customerService'
 import { addToCustomerCart } from '../store/actions/customerCartActions'
 import { toast } from 'react-toastify'
@@ -14,8 +14,11 @@ export default function CustomerList() {
         let customerService = new CustomerService()
         customerService.getCustomers().then(result => setCustomers(result.data.data))
     }, [])
+    function deleteCustomer(id) {
+        let customerService = new CustomerService()
+        customerService.deleteCustomer(id)
+    }
 
-    
 
     const handleAddtoCustomerCart = (customer) => {
         dispatch(addToCustomerCart(customer))
@@ -40,32 +43,17 @@ export default function CustomerList() {
                                 <Table.Cell><Link to={`/customers/${customer.passportNumber}`}>{customer.customerName}</Link> </Table.Cell>
                                 <Table.Cell>{customer.email}</Table.Cell>
                                 <Table.Cell>{customer.customerPhone}</Table.Cell>
-                                <Table.Cell><Button onClick={() => handleAddtoCustomerCart(customer)}>Select</Button></Table.Cell>
+                                <Table.Cell>
+                                    <Button onClick={() => handleAddtoCustomerCart(customer)}>Select</Button>
+                                    <Button onClick={deleteCustomer(customer.passportNumber)}>Delete</Button>
+                                </Table.Cell>
+
                             </Table.Row>
                         ))
                     }
 
 
                 </Table.Body>
-
-                <Table.Footer>
-                    <Table.Row>
-                        <Table.HeaderCell colSpan='3'>
-                            <Menu floated='right' pagination>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron left' />
-                                </Menu.Item>
-                                <Menu.Item as='a'>1</Menu.Item>
-                                <Menu.Item as='a'>2</Menu.Item>
-                                <Menu.Item as='a'>3</Menu.Item>
-                                <Menu.Item as='a'>4</Menu.Item>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron right' />
-                                </Menu.Item>
-                            </Menu>
-                        </Table.HeaderCell>
-                    </Table.Row>
-                </Table.Footer>
             </Table>
         </div>
     )
